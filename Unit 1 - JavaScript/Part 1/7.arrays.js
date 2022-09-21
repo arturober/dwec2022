@@ -13,3 +13,27 @@ console.log(letters2); // ["a", "b"]
 
 let nums = [10];
 console.log(nums); // [10]
+
+// for (let i = 0; i < letters.length; i++) {
+//     console.log(letters[i]);
+// }
+
+// for (const i in letters) {
+//     console.log(letters[i]);
+// }
+
+// for (const letter of letters) {
+//     console.log(letter);
+// }
+
+// letters.forEach(letter => console.log(letter));
+letters.forEach((letter, i) => console.log(`${i} - ${letter}`));
+
+let str = "abcdefg";
+for (let letter of str) {
+  if (letter.match(/^[aeiou]$/)) {
+    console.log(letter + " is a vowel");
+  } else {
+    console.log(letter + " is a consonant");
+  }
+}
