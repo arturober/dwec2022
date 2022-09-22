@@ -20,3 +20,19 @@ console.log(totalJLengths);
 
 console.log(a.reduce((total, n) => total + n));
 
+let chars = Array.from("Hello world!");
+console.log(chars.toString());
+console.log(chars.filter(l => l.match(/[aeiou]/)).toString());
+
+let nums = [3, 9, 13 ,6, 12, 51, 10];
+// Show only even numbers
+console.log(nums.filter(n => n % 2 === 1));
+// Delete only the first even number
+let posEven = nums.findIndex(n => n % 2 === 0);
+nums.splice(posEven, 1);
+console.log(nums); // [3, 9, 13, 12, 51, 10]
+
+let words = ["house", "tree", "dog"];
+console.log(words.map(w => Array.from(w))); // [["h", "o", "u", "s", "e"], ["t", "r", "e", "e"], ["d", "o", "g"]]
+console.log(words.flatMap(w => Array.from(w))); // ["h", "o", "u", "s", "e", "t", "r", "e", "e", "d", "o", "g"]
+
