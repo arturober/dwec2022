@@ -25,3 +25,20 @@ console.log(new Intl.NumberFormat('en-UK').format(number)); // 15,300.956
 console.log(new Intl.NumberFormat('es-ES').format(number)); // 15.300,956
 console.log(new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(number));// 15.300,96 €
 console.log(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(number));// $15,300.96
+
+let date = new Date('2022-04-25');
+console.log(new Intl.DateTimeFormat('es-ES').format(date)); // 25/4/2022 (default)
+console.log(new Intl.DateTimeFormat('es-ES', {
+  dateStyle: "full"
+}).format(date)); // 25/4/22
+  
+console.log(new Intl.DateTimeFormat('es-ES', {
+  day: "2-digit", month: "2-digit", year: "numeric"
+}).format(date)); // 25/04/2022
+
+console.log(new Intl.DateTimeFormat('es-ES', {
+  day: "numeric", month: "long", year: "numeric" ,
+  hour: 'numeric', minute: 'numeric', hourCycle: 'h12', dayPeriod: 'long'
+}).format(date)); // 25 de abril de 2022 2:00 de la madrugada
+  
+  
