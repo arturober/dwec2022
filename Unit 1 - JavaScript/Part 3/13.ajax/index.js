@@ -1,28 +1,14 @@
-fetch('http://arturober.com:5007/restaurants')
-.then(resp => resp.json())
-.then(json => console.log(json));
+const table = document.getElementById("table");
+const form = document.getElementById("form");
+const imgPreview = document.getElementById("imgPreview");
 
-/*
-fetch(`${SERVER}/restaurants`, {
-    method: 'POST',
-    body: JSON.stringify(restaurant),
-    headers: {
-    'Content-Type': 'application/json'
-    }
-}).then(resp => {
-    if(!resp.ok) throw new Error(resp.statusText);
-    return resp.json(); // promise
-}).then(respJSON => {
-    // Put restaurant in HTML
-}).catch(error => console.error(error));
-*/
-
-/*
-fetch('http://arturober.com:5007/restaurants', {
-    method: 'DELETE'
-})
-.then(resp => {
-    if(!resp.ok) throw new Error(resp.statusText);
-    // OK Delete restaurant in HTML
+form.image.addEventListener("change", (event) => {
+  let file = event.target.files[0];
+  let reader = new FileReader();
+  if (file) reader.readAsDataURL(file);
+  reader.addEventListener("load", (e) => {
+    imgPreview.src = reader.result;
+  });
 });
-*/
+
+
