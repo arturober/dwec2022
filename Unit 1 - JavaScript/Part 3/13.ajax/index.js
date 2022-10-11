@@ -16,6 +16,8 @@ fetch(`${SERVER}/restaurants`, {
     // Put restaurant in HTML
 }).catch(error => console.error(error));
 */
+
+/*
 fetch('http://arturober.com:5007/restaurants', {
     method: 'DELETE'
 })
@@ -23,6 +25,4 @@ fetch('http://arturober.com:5007/restaurants', {
     if(!resp.ok) throw new Error(resp.statusText);
     // OK Delete restaurant in HTML
 });
-/*
-
 */
