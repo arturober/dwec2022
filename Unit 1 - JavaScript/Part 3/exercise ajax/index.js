@@ -14,5 +14,30 @@ let ul = document.getElementById("todolist");
 function addTarea(tarea) {
     let li = document.createElement("li");
     li.append(tarea.descripcion);
+
+    let button = document.createElement("button");
+    button.append("Delete");
+    button.style.marginLeft = "10px";
+
+    button.addEventListener("click", e => {
+        fetch(`http://arturober.com:5006/tareas/${tarea.id}`, { method: "DELETE" })
+        .then(resp => li.remove());
+    });
+
+    li.append(button);
     ul.append(li);
 }
+
+let form = document.querySelector("form");
+form.addEventListener("submit", e => {
+    e.preventDefault();
+    let tarea = {
+        descripcion: form.desc.value
+    };
+
+    fetch('http://arturober.com:5006/tareas', {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(tarea)
+    })
+    .then(resp => resp.json())
+    .then(json => addTarea(json.tarea));
+});

@@ -1,4 +1,4 @@
-class Http {
+export class Http {
   ajax(method, url, headers = {}, body = null) {
     return fetch(url, { method, headers, body }).then((resp) => {
       if (!resp.ok) throw new Error(resp.statusText);

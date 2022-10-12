@@ -1,14 +1,68 @@
-const table = document.getElementById("table");
+import { SERVER } from "./constants.js";
+import { ProductService } from "./product-service.class.js";
+
+const tbody = document.querySelector("#table tbody");
 const form = document.getElementById("form");
 const imgPreview = document.getElementById("imgPreview");
 
+const productService = new ProductService();
+
+function appendProduct(product) {
+  const tr = document.createElement("tr");
+  const tdImg  = document.createElement("td");
+  const tdName = document.createElement("td");
+  const tdDesc = document.createElement("td");
+  const tdDelete = document.createElement("td");
+
+  const img = document.createElement("img");
+  img.src = SERVER + "/" + product.photo;
+  tdImg.append(img);
+
+  tdName.append(product.name);
+  tdDesc.append(product.description);
+  
+  let btnDel = document.createElement("button");
+  btnDel.append("Delete");
+  tdDelete.append(btnDel);
+
+  btnDel.addEventListener("click", e => {
+    productService.delete(product.id)
+    .then(() => tr.remove());
+  });
+
+  tr.append(tdImg, tdName, tdDesc, tdDelete);
+
+  tbody.append(tr);
+}
+
+productService.getProducts()
+.then(products => products.forEach(p => appendProduct(p)))
+.catch(error => console.error("Error loading products: ", error));
+
 form.image.addEventListener("change", (event) => {
-  let file = event.target.files[0];
-  let reader = new FileReader();
+  const file = event.target.files[0];
+  const reader = new FileReader();
   if (file) reader.readAsDataURL(file);
   reader.addEventListener("load", (e) => {
     imgPreview.src = reader.result;
   });
+});
+
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  const product = {
+    name: form.name.value,
+    description: form.description.value,
+    photo: imgPreview.src
+  };
+
+  productService.add(product)
+  .then(product => {
+    appendProduct(product);
+    form.reset();
+    imgPreview.src = "";
+  })
+  .catch(error => console.error("Error creating the product: ", error));
 });
 
 

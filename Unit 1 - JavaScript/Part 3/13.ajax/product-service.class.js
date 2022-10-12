@@ -9,12 +9,12 @@ export class ProductService {
 
   getProducts() {
     return this.#http.get(`${SERVER}/products`)
-    .then((response) => response.products);
+      .then((response) => response.products);
   }
 
   add(product) {
     return this.#http.post(`${SERVER}/products`, product)
-    .then((response) => response.product);
+      .then((response) => response.product);
   }
 
   update(product) {
