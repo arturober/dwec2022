@@ -4,14 +4,21 @@
   "description": "NPM example",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "hello": "echo \"Hello world\"",
+    "test": "eslint src/*.js",
+    "prebuild": "npm test",
+    "build": "uglifyjs -mc -o dist/bundle.js src/*.js",
+    "prestart": "npm run build",
+    "start": "lite-server"
   },
   "author": "Arturo",
   "license": "ISC",
   "dependencies": {
-    "jquery": "^3.6.1"
+    "jquery": "^3.6.1",
+    "luxon": "^3.0.4"
   },
   "devDependencies": {
+    "eslint": "^8.25.0",
     "lite-server": "^2.6.1",
     "uglify-js": "^3.17.3"
   }

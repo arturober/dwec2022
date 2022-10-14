@@ -1,0 +1,1 @@
+import{DateTime}from"/node_modules/luxon/build/es6/luxon.js";function sayHello(e){var o=DateTime.now();console.log("Hello "+e),console.log(o.setLocale("es").toLocaleString())}let name="Peter";sayHello(name);
