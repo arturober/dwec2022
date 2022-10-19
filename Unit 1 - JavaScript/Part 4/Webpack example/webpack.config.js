@@ -9,8 +9,8 @@ module.exports = {
     port: 8080, // Default
     hot: false,
   },
-  mode: "production",
-  // devtool: "source-map",
+  mode: "development",
+  devtool: "source-map",
   context: path.join(__dirname, "./src"),
   entry: {
     index: "./index.js",
@@ -39,6 +39,7 @@ module.exports = {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
+      { test: /\.hbs$/, loader: "handlebars-loader" },
     ],
   },
   optimization: {
