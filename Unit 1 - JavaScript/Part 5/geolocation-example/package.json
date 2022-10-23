@@ -21,6 +21,6 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
-    "maplibre-gl": "^2.4.0"
+    "@arcgis/core": "^4.24.7"
   }
 }

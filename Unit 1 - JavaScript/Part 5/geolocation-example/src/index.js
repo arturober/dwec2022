@@ -1,24 +1,65 @@
 import {MyGeolocation} from "./my-geolocation.class";
-import {Map, Marker} from "maplibre-gl";
+import Map from "@arcgis/core/Map";
+import MapView from "@arcgis/core/views/MapView";
+import Graphic from "@arcgis/core/Graphic";
+import esriConfig from "@arcgis/core/config";
+import Search from "@arcgis/core/widgets/Search";
 
-import maplibrecss from "../node_modules/maplibre-gl/dist/maplibre-gl.css";
-import css from "../styles.css";
+import "../node_modules/@arcgis/core/assets/esri/themes/light/main.css";
+import "../styles.css";
 
-let p = document.getElementById("coordinates");
+const pAddress = document.getElementById("address");
+let map;
+let view;
 
-const apiKey = "AAPK5fa1609b719e42bcacbe0853c2e0ef63etisgeCcpqCcGL5GKcb8jPzPNDm-arxk_yZiQ-VaFnfw_wuQKo41AlguZ12-PwOk";
-const basemapEnum = "OSM:Streets";
+esriConfig.apiKey = "AAPKc2940b004f38491b869000328dd73685GNKiJxJwOBscpCvz9Pxpae-LVDdvsqr_p6VDTqAas1Kj7idPwcMZqSc-fuDAY91R";
 
-MyGeolocation.getGeolocation()
-    .then(coords => {
-        const map = new Map({
-            container: "map",
-            style: `https://basemaps-api.arcgis.com/arcgis/rest/services/styles/${basemapEnum}?type=style&token=${apiKey}`, // stylesheet location
-            center: [coords.longitude, coords.latitude], // starting position [lng, lat]
-            zoom: 13 // starting zoom
-        });
-        new Marker({color: "red"})
-            .setLngLat([coords.longitude, coords.latitude])
-            .addTo(map);
-    })
-    .catch(error => p.textContent = error);
+async function showMap() {
+    const coords = await MyGeolocation.getGeolocation();
+    map = new Map({ basemap: "osm-streets-relief"});
+    view = new MapView({
+        map: map,
+        center: [coords.longitude, coords.latitude], // Longitude, latitude
+        zoom: 15, // Zoom level
+        container: "map" // Div element (id)
+    });
+
+    createMarker(coords.latitude, coords.longitude, "red");
+
+    view.on("click", event => {
+        createMarker(event.mapPoint.latitude, event.mapPoint.longitude, "green");
+        view.goTo({center: [event.mapPoint.longitude, event.mapPoint.latitude]});
+    });
+
+    const search = new Search({  //Add Search widget
+        view: view,
+        popupEnabled: false
+    });
+    view.ui.add(search, "top-right");
+    search.on("select-result", e => {
+        pAddress.innerText = e.result.name;
+        const coords = e.result.target.geometry.centroid; 
+        createMarker(coords.latitude, coords.longitude, "red");
+    });
+} 
+
+function createMarker(lat, long, color) {
+    // Create a graphic and add the geometry and symbol to it
+    const pointGraphic = new Graphic({
+        geometry: {
+            type: "point", // autocasts as new Point()
+            longitude: long,
+            latitude: lat
+        },
+        symbol: {
+            type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+            color: color
+        }
+    });
+
+    // Add the graphics to the view's graphics layer
+    view.graphics.add(pointGraphic);
+}
+
+showMap();
+
