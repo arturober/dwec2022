@@ -1,4 +1,3 @@
-import Graphic from "@arcgis/core/Graphic";
 import "../node_modules/@arcgis/core/assets/esri/themes/light/main.css";
 import "../styles.css";
 import { GeolocationService } from "./geolocation-service";
@@ -7,7 +6,7 @@ import { MapService } from "./map-service";
 
 const pAddress = document.getElementById("address");
 
-async function showMap() {
+async function showMap(): Promise<void> {
     const coords = await GeolocationService.getLocation();
     const mapService = MapService.createMapService(coords, "map");
     mapService.createMarker(coords, "red");
