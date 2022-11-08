@@ -1,0 +1,26 @@
+<div class="card">
+  <div class="card-header bg-primary text-white">{{ title }}</div>
+  <div class="card-block">
+    <div class="table-responsive" *ngIf="products.length; else noProducts">
+      <table class="table table-striped m-0">
+        <thead>
+          <tr>
+            <th>{{ headers.description }}</th>
+            <th>{{ headers.price }}</th>
+            <th>{{ headers.available }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products">
+            <td>{{ product.description }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.available }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noProducts>
+      <p>There are no products to show</p>
+    </ng-template>
+  </div>
+</div>
