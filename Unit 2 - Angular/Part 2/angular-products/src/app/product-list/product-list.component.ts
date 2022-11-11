@@ -2,19 +2,25 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product } from '../interfaces/product';
 import { FormsModule } from '@angular/forms';
+import { ProductFilterPipe } from '../pipes/product-filter.pipe';
 
 @Component({
   selector: 'product-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ProductFilterPipe],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent {
-  title = 'My product\'s list';
-  headers = { image: 'Image', description: 'Product', price: 'Price', available: 'Available' };
+  title = "My product's list";
+  headers = {
+    image: 'Image',
+    description: 'Product',
+    price: 'Price',
+    available: 'Available',
+  };
   showImg = true;
-  filterSearch = 'Hello';
+  filterSearch = '';
   fileName = '';
 
   newProduct!: Product;
@@ -51,7 +57,7 @@ export class ProductListComponent {
       price: 45.5,
       imageUrl: 'assets/ram.jpg',
       rating: 3,
-    }
+    },
   ];
 
   constructor() {
@@ -84,7 +90,7 @@ export class ProductListComponent {
       available: '',
       imageUrl: '',
       rating: 0,
-      price: 0
+      price: 0,
     };
   }
 }

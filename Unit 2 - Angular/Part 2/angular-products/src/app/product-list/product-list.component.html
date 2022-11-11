@@ -42,7 +42,7 @@
         </thead>
         <tbody>
           <tr
-            *ngFor="let product of products; let i = index; let isEven = even"
+            *ngFor="let product of products | productFilter:filterSearch; let isEven = even"
           >
             <td>
               <img

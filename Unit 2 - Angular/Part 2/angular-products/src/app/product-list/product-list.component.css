@@ -1,0 +1,17 @@
+td {
+  vertical-align:middle;
+}
+
+td:first-child img {
+  height: 40px;
+}
+
+.red {
+  color: red !important;
+}
+
+.green {
+  color: green;
+}
+
+
