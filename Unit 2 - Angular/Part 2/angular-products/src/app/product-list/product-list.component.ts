@@ -3,11 +3,19 @@ import { CommonModule } from '@angular/common';
 import { Product } from '../interfaces/product';
 import { FormsModule } from '@angular/forms';
 import { ProductFilterPipe } from '../pipes/product-filter.pipe';
+import { ProductFormComponent } from '../product-form/product-form.component';
+import { ProductItemComponent } from '../product-item/product-item.component';
 
 @Component({
   selector: 'product-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, ProductFilterPipe],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ProductFilterPipe,
+    ProductFormComponent,
+    ProductItemComponent,
+  ],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
 })
@@ -21,9 +29,6 @@ export class ProductListComponent {
   };
   showImg = true;
   filterSearch = '';
-  fileName = '';
-
-  newProduct!: Product;
 
   products: Product[] = [
     {
@@ -60,37 +65,7 @@ export class ProductListComponent {
     },
   ];
 
-  constructor() {
-    this.resetProduct();
-  }
-
   toggleShowImg() {
     this.showImg = !this.showImg;
-  }
-
-  changeImage(event: Event) {
-    const fileInput = event.target as HTMLInputElement;
-    if (!fileInput.files || fileInput.files.length === 0) return;
-    const reader = new FileReader();
-    reader.readAsDataURL(fileInput.files[0]);
-    reader.addEventListener('loadend', (e) => {
-      this.newProduct.imageUrl = reader.result as string;
-    });
-  }
-
-  addProduct() {
-    this.products.push(this.newProduct);
-    this.fileName = '';
-    this.resetProduct();
-  }
-
-  private resetProduct() {
-    this.newProduct = {
-      description: '',
-      available: '',
-      imageUrl: '',
-      rating: 0,
-      price: 0,
-    };
   }
 }
