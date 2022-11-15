@@ -68,4 +68,8 @@ export class ProductListComponent {
   toggleShowImg() {
     this.showImg = !this.showImg;
   }
+
+  addProduct(product: Product) {
+    this.products = [...this.products, product];
+  }
 }

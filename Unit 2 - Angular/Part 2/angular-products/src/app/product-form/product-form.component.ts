@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product } from '../interfaces/product';
 import { FormsModule } from '@angular/forms';
@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./product-form.component.css']
 })
 export class ProductFormComponent {
+  @Output() insert = new EventEmitter<Product>();
+
   fileName = '';
   newProduct!: Product;
 
@@ -30,6 +32,7 @@ export class ProductFormComponent {
 
   addProduct() {
     // this.products.push(this.newProduct);
+    this.insert.emit(this.newProduct);
     this.fileName = '';
     this.resetProduct();
   }

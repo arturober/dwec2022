@@ -36,6 +36,7 @@
         <div class="col-4">{{ headers.description }}</div>
         <div class="col">{{ headers.price }}</div>
         <div class="col">{{ headers.available }}</div>
+        <div class="col">Rating</div>
       </div>
       <product-item
         class="row g-0"
@@ -51,4 +52,4 @@
   </div>
 </div>
 
-<product-form></product-form>
+<product-form (insert)="addProduct($event)"></product-form>

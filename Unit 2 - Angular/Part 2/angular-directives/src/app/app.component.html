@@ -1,0 +1,44 @@
+<p>
+  Color (click on any element below): <select [(ngModel)]="color">
+    <option value="yellow">Yellow</option>
+    <option value="red">Red</option>
+    <option value="#06F">Blue</option>
+  </select>
+</p>
+
+<table>
+  <tr>
+    <td appSetColor [color]="color">1</td>
+    <td appSetColor [color]="color">2</td>
+    <td appSetColor [color]="color">3</td>
+  </tr>
+  <tr>
+    <td appSetColor [color]="color">4</td>
+    <td appSetColor [color]="color">5</td>
+    <td appSetColor [color]="color">6</td>
+  </tr>
+  <tr>
+    <td appSetColor [color]="color">7</td>
+    <td appSetColor [color]="color">8</td>
+    <td appSetColor [color]="color">9</td>
+  </tr>
+</table>
+
+<p appSetColor [color]="color">Paragraph 1</p>
+<p appSetColor [color]="color">Paragraph 2</p>
+
+<p>
+  Names per row:
+  <select [(ngModel)]="num">
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+</p>
+
+<table border="1">
+  <tr *appForGroup="let group of names by num">
+    <td *ngFor="let name of group">{{name}}</td>
+  </tr>
+</table>
