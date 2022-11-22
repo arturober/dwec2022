@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,12 +8,16 @@ import { CommonModule } from '@angular/common';
   templateUrl: './star-rating.component.html',
   styleUrls: ['./star-rating.component.css']
 })
-export class StarRatingComponent implements OnInit {
+export class StarRatingComponent implements OnInit, OnChanges {
   @Input() rating!: number;
   @Output() changed = new EventEmitter<number>();
   auxRating!: number;
 
   ngOnInit(): void {
+    this.auxRating = this.rating;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.auxRating = this.rating;
   }
 

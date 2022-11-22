@@ -52,4 +52,8 @@ export class ProductListComponent implements OnInit {
   addProduct(product: Product) {
     this.products = [...this.products, product];
   }
+
+  deleteProduct(product: Product) {
+    this.products = this.products.filter(p => p !== product);
+  }
 }

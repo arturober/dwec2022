@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product } from '../interfaces/product';
 import { FormsModule } from '@angular/forms';
+import { ProductsService } from '../services/products.service';
 
 @Component({
   selector: 'product-form',
@@ -16,7 +17,7 @@ export class ProductFormComponent {
   fileName = '';
   newProduct!: Product;
 
-  constructor() {
+  constructor(private readonly productsService: ProductsService) {
     this.resetProduct();
   }
 
@@ -32,9 +33,13 @@ export class ProductFormComponent {
 
   addProduct() {
     // this.products.push(this.newProduct);
-    this.insert.emit(this.newProduct);
-    this.fileName = '';
-    this.resetProduct();
+    this.productsService.addProduct(this.newProduct).subscribe(
+      product => {
+        this.insert.emit(product);
+        this.fileName = '';
+        this.resetProduct();
+      }
+    );
   }
 
   private resetProduct() {
@@ -42,7 +47,7 @@ export class ProductFormComponent {
       description: '',
       available: '',
       imageUrl: '',
-      rating: 0,
+      rating: 1,
       price: 0,
     };
   }

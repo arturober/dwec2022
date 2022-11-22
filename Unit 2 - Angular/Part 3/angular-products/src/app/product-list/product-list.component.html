@@ -37,12 +37,14 @@
         <div class="col">{{ headers.price }}</div>
         <div class="col">{{ headers.available }}</div>
         <div class="col">Rating</div>
+        <div class="col-auto"></div>
       </div>
       <product-item
         class="row g-0"
         *ngFor="let product of products | productFilter: filterSearch"
         [product]="product"
         [showImg]="showImg"
+        (deleted)="deleteProduct(product)"
       >
       </product-item>
     </div>
