@@ -24,6 +24,12 @@ export class ProductsService {
     );
   }
 
+  getProduct(id: number): Observable<Product> {
+    return this.http.get<ProductResponse>(`${this.PRODUCTS_URL}/${id}`).pipe(
+      map((r) => r.product)
+    );
+  }
+
   addProduct(product: Product): Observable<Product> {
     return this.http
       .post<ProductResponse>(this.PRODUCTS_URL, product)

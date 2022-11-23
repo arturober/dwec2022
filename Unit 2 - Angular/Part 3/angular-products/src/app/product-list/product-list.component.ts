@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product } from '../interfaces/product';
 import { FormsModule } from '@angular/forms';
@@ -7,6 +13,7 @@ import { ProductFormComponent } from '../product-form/product-form.component';
 import { ProductItemComponent } from '../product-item/product-item.component';
 import { ProductsService } from '../services/products.service';
 import { Subscription } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'product-list',
@@ -33,15 +40,20 @@ export class ProductListComponent implements OnInit {
   filterSearch = '';
 
   products: Product[] = [];
-  subscription!: Subscription
+  subscription!: Subscription;
 
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(
+    private readonly productsService: ProductsService,
+    private readonly titleService: Title
+  ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('Product List | Angular Products');
+
     this.productsService.getProducts().subscribe({
-      next: products => this.products = products,
-      error: error => console.log(error),
-      complete: () => console.log('Products loading complete!')
+      next: (products) => (this.products = products),
+      error: (error) => console.log(error),
+      complete: () => console.log('Products loading complete!'),
     });
   }
 
@@ -54,6 +66,6 @@ export class ProductListComponent implements OnInit {
   }
 
   deleteProduct(product: Product) {
-    this.products = this.products.filter(p => p !== product);
+    this.products = this.products.filter((p) => p !== product);
   }
 }
