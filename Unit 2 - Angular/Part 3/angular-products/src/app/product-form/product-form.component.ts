@@ -4,6 +4,9 @@ import { Product } from '../interfaces/product';
 import { FormsModule } from '@angular/forms';
 import { ProductsService } from '../services/products.service';
 import { Title } from '@angular/platform-browser';
+import { CanDeactivateComponent } from '../guards/leave-page.guard';
+import { Router, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'product-form',
@@ -12,19 +15,33 @@ import { Title } from '@angular/platform-browser';
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.css'],
 })
-export class ProductFormComponent implements OnInit {
-  @Output() insert = new EventEmitter<Product>();
-
+export class ProductFormComponent implements OnInit, CanDeactivateComponent {
   fileName = '';
   newProduct!: Product;
+  saved = false;
 
   constructor(
     private readonly productsService: ProductsService,
-    private readonly titleService: Title
+    private readonly titleService: Title,
+    private readonly router: Router
   ) {}
 
+  canDeactivate() {
+    if(!this.saved) {
+      this.newProduct.imageUrl = ''; // The image may be too big for localStorage
+      localStorage.setItem("newProduct", JSON.stringify(this.newProduct));
+    }
+    return this.saved || confirm('Do you want to leave this page?. Changes can be lost');
+  }
+
   ngOnInit(): void {
-    this.resetProduct();
+    const savedProd = localStorage.getItem("newProduct");
+    if(savedProd) {
+      this.newProduct = JSON.parse(savedProd);
+      localStorage.removeItem("newProduct");
+    } else {
+      this.resetProduct();
+    }
     this.titleService.setTitle('Add Product | Angular Products');
   }
 
@@ -41,9 +58,8 @@ export class ProductFormComponent implements OnInit {
   addProduct() {
     // this.products.push(this.newProduct);
     this.productsService.addProduct(this.newProduct).subscribe((product) => {
-      this.insert.emit(product);
-      this.fileName = '';
-      this.resetProduct();
+      this.saved = true;
+      this.router.navigate(['/products']);
     });
   }
 

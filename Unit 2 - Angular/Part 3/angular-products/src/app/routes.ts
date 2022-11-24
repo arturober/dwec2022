@@ -1,19 +1,28 @@
 import { Routes } from '@angular/router';
+import { leavePageGuard } from './guards/leave-page.guard';
 import { productIdGuard } from './guards/product-id.guard';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { productResolver } from './resolvers/product.resolver';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 export const APP_ROUTES: Routes = [
   { path: 'welcome', component: WelcomeComponent },
   { path: 'products', component: ProductListComponent },
-  { path: 'products/add', component: ProductFormComponent },
+  {
+    path: 'products/add',
+    component: ProductFormComponent,
+    canDeactivate: [leavePageGuard],
+  },
   // :id is a parameter (product's id)
   {
     path: 'products/:id',
     component: ProductDetailComponent,
     canActivate: [productIdGuard],
+    resolve: {
+      product: productResolver
+    }
   },
   // Default route (empty) -> Redirect to welcome page
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
