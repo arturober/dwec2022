@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product } from '../interfaces/product';
-import { StarRatingComponent } from '../star-rating/star-rating.component';
 import { ProductsService } from '../services/products.service';
 import { RouterLink } from '@angular/router';
+import { StarRatingComponent } from 'src/app/shared/star-rating/star-rating.component';
 
 @Component({
   selector: 'product-item',

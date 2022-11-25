@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Product } from '../interfaces/product';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProductsService } from '../services/products.service';
-import { StarRatingComponent } from '../star-rating/star-rating.component';
+import { StarRatingComponent } from '../../shared/star-rating/star-rating.component';
 
 @Component({
   selector: 'product-detail',

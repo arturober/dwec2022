@@ -1,12 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Product } from '../interfaces/product';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ProductsService } from '../services/products.service';
 import { Title } from '@angular/platform-browser';
-import { CanDeactivateComponent } from '../guards/leave-page.guard';
-import { Router, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { CanDeactivateComponent } from 'src/app/guards/leave-page.guard';
+import { Product } from '../interfaces/product';
+import { ProductsService } from '../services/products.service';
 
 @Component({
   selector: 'product-form',
