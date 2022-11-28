@@ -1,0 +1,55 @@
+<div class="card">
+  <div class="card-header bg-primary text-white">{{ title }}</div>
+  <div class="card-block">
+    <form class="form p-3 border-bottom">
+      <div class="form-group row">
+        <label class="col-form-label col-sm-2 text-sm-end" for="filterDesc">
+          Filter:
+        </label>
+        <div class="col-sm-5">
+          <input
+            type="text"
+            [(ngModel)]="filterSearch"
+            class="form-control"
+            name="filterDesc"
+            id="filterDesc"
+            placeholder="Filter..."
+          />
+        </div>
+        <label class="col-form-label col-sm-5">
+          Filtered by: {{ filterSearch }}
+        </label>
+      </div>
+    </form>
+
+    <div *ngIf="products && products.length">
+      <div class="row headers g-0">
+        <div class="col-2">
+          <button
+            class="btn btn-sm"
+            [ngClass]="{ 'btn-danger': showImg, 'btn-primary': !showImg }"
+            (click)="toggleShowImg()"
+          >
+            {{ showImg ? "Hide" : "Show" }} images
+          </button>
+        </div>
+        <div class="col-4">{{ headers.description }}</div>
+        <div class="col">{{ headers.price }}</div>
+        <div class="col">{{ headers.available }}</div>
+        <div class="col">Rating</div>
+        <div class="col-auto"></div>
+      </div>
+      <product-item
+        class="row g-0"
+        *ngFor="let product of products | productFilter: filterSearch"
+        [product]="product"
+        [showImg]="showImg"
+        (deleted)="deleteProduct(product)"
+      >
+      </product-item>
+    </div>
+    <ng-template #noProducts>
+      <p>There are no products to show</p>
+    </ng-template>
+  </div>
+</div>
