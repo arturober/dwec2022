@@ -1,7 +1,7 @@
 <div class="card mt-4">
   <div class="card-header bg-success text-white">Add product</div>
   <div class="card-body">
-    <form (ngSubmit)="addProduct()">
+    <form (ngSubmit)="addProduct()" #productForm="ngForm">
       <div class="mb-3 row">
         <label class="col-sm-2 col-form-label text-sm-end">Description</label>
         <div class="col-sm-10">
@@ -12,7 +12,19 @@
             [(ngModel)]="newProduct.description"
             minlength="5"
             required
+            #descModel="ngModel"
+            [ngClass]="validClasses(descModel, 'is-valid', 'is-invalid')"
           />
+          <div class="invalid-feedback" *ngIf="descModel.errors?.['required']">
+            Description is mandatory
+          </div>
+          <div class="invalid-feedback" *ngIf="descModel.errors?.['minlength']">
+            Description must be at least 5 characters
+            <p>
+              {{ descModel.errors?.['minlength'].requiredLength - descModel.errors?.['minlength'].actualLength }}
+              characters left
+            </p>
+          </div>
         </div>
       </div>
       <div class="mb-3 row">
@@ -23,7 +35,17 @@
             class="form-control"
             name="price"
             [(ngModel)]="newProduct.price"
+            required
+            min="0.1"
+            #priceModel="ngModel"
+            [ngClass]="validClasses(priceModel, 'is-valid', 'is-invalid')"
           />
+          <div class="invalid-feedback" *ngIf="priceModel.errors?.['required']">
+            Price is mandatory
+          </div>
+          <div class="invalid-feedback" *ngIf="priceModel.errors?.['min']">
+            Price must be at least 0.1€
+          </div>
         </div>
       </div>
       <div class="mb-3 row">
@@ -34,7 +56,17 @@
             class="form-control"
             name="available"
             [(ngModel)]="newProduct.available"
+            required
+            [minDate]="'2022-01-01'"
+            #availModel="ngModel"
+            [ngClass]="validClasses(availModel, 'is-valid', 'is-invalid')"
           />
+          <div class="invalid-feedback" *ngIf="availModel.errors?.['required']">
+            Date is mandatory
+          </div>
+          <div class="invalid-feedback" *ngIf="availModel.errors?.['minDate']">
+            Date must be at least 01/01/2022
+          </div>
         </div>
       </div>
       <div class="mb-3 row">
@@ -46,8 +78,14 @@
             accept="image/*"
             (change)="changeImage($event)"
             name="fileName"
-            [(ngModel)]="fileName"
+            ngModel
+            required
+            #imageModel="ngModel"
+            [ngClass]="validClasses(imageModel, 'is-valid', 'is-invalid')"
           />
+          <div class="invalid-feedback">
+            Image is mandatory
+          </div>
         </div>
       </div>
       <div class="row">
@@ -58,13 +96,20 @@
 
       <div class="mb-3 row">
         <div class="offset-sm-2 col-sm-10">
-          <button type="submit" class="btn btn-primary">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="productForm.invalid"
+          >
             {{ edit ? "Edit" : "Add" }} product
           </button>
         </div>
       </div>
     </form>
 
-    <div>{{ newProduct | json }}</div>
+    <div>Touched: {{ productForm.touched }}</div>
+    <div>Dirty: {{ productForm.dirty }}</div>
+    <div>Valid: {{ productForm.valid }}</div>
+    <div>Value: {{ productForm.value | json }}</div>
   </div>
 </div>
