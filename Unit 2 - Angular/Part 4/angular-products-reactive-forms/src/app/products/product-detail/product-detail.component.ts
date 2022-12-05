@@ -8,7 +8,7 @@ import { StarRatingComponent } from '../../shared/star-rating/star-rating.compon
 @Component({
   selector: 'product-detail',
   standalone: true,
-  imports: [CommonModule, StarRatingComponent, RouterLink],
+  imports: [CommonModule, StarRatingComponent],
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css'],
 })
@@ -17,7 +17,7 @@ export class ProductDetailComponent implements OnInit {
 
   constructor(
     private router: Router,
-    public route: ActivatedRoute,
+    private route: ActivatedRoute,
     private productsService: ProductsService
   ) {}
 

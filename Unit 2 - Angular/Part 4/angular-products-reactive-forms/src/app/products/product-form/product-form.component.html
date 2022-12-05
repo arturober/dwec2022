@@ -1,0 +1,87 @@
+<div class="card mt-4">
+  <div class="card-header bg-success text-white">Add product</div>
+  <div class="card-body">
+    <form [formGroup]="formProduct">
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label text-sm-end">Description</label>
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            formControlName="description"
+            [ngClass]="validClasses(descControl, 'is-valid', 'is-invalid')"
+          />
+          <div
+            class="invalid-feedback"
+            *ngIf="descControl.errors?.['required']"
+          >
+            Description is mandatory
+          </div>
+          <div
+            class="invalid-feedback"
+            *ngIf="descControl.errors?.['minlength']"
+          >
+            Description must be at least 5 characters
+            <p>
+              {{ descControl.errors?.['minlength'].requiredLength - descControl.errors?.['minlength'].actualLength }}
+              characters left
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label text-sm-end">Price</label>
+        <div class="col-sm-10">
+          <input
+            type="number"
+            class="form-control"
+            formControlName="price"
+            [ngClass]="validClasses(priceControl, 'is-valid', 'is-invalid')"
+          />
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label text-sm-end">Available</label>
+        <div class="col-sm-10">
+          <input
+            type="date"
+            class="form-control"
+            formControlName="available"
+            [ngClass]="validClasses(availControl, 'is-valid', 'is-invalid')"
+          />
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label text-sm-end"> Image</label>
+        <div class="col-sm-10">
+          <input
+            type="file"
+            class="form-control"
+            accept="image/*"
+            (change)="changeImage($event)"
+            formControlName="image"
+            [ngClass]="validClasses(imageControl, 'is-valid', 'is-invalid')"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-10 offset-sm-2">
+          <img
+            class="product-img"
+            *ngIf="newProduct"
+            [src]="newProduct.imageUrl"
+          />
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <div class="offset-sm-2 col-sm-10">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </form>
+
+    <div>{{ formProduct.value | json }}</div>
+  </div>
+</div>
