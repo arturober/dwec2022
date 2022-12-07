@@ -36,6 +36,12 @@ export class ProductsService {
       .pipe(map((resp) => resp.product));
   }
 
+  editProduct(product: Product): Observable<Product> {
+    return this.http
+      .put<ProductResponse>(`${this.PRODUCTS_URL}/${product.id}`, product)
+      .pipe(map((resp) => resp.product));
+  }
+
   deleteProduct(id: number): Observable<void> {
     return this.http.delete<void>(`${this.PRODUCTS_URL}/${id}`);
   }

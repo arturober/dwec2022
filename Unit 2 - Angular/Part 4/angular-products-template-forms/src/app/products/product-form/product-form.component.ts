@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormsModule, NgModel } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormsModule, NgForm, NgModel } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -20,6 +20,7 @@ export class ProductFormComponent implements OnInit, CanDeactivateComponent {
   newProduct!: Product;
   saved = false;
   edit = false;
+  @ViewChild('productForm') productForm!: NgForm;
 
   constructor(
     private readonly productsService: ProductsService,
@@ -31,6 +32,7 @@ export class ProductFormComponent implements OnInit, CanDeactivateComponent {
   canDeactivate() {
     return (
       this.saved ||
+      this.productForm.pristine ||
       confirm('Do you want to leave this page?. Changes can be lost')
     );
   }

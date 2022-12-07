@@ -1,9 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { CanDeactivateComponent } from 'src/app/guards/leave-page.guard';
+import { minDateValidator } from 'src/app/shared/validators/min-date.validator';
 import { Product } from '../interfaces/product';
 import { ProductsService } from '../services/products.service';
 
@@ -21,15 +30,15 @@ export class ProductFormComponent implements OnInit, CanDeactivateComponent {
     available: '',
     price: 0,
     imageUrl: '',
-    rating: 1
+    rating: 1,
   };
   saved = false;
+  edit = false;
   formProduct!: FormGroup;
   descControl!: FormControl<string>;
-  priceControl!: FormControl<0>;
+  priceControl!: FormControl<number>;
   availControl!: FormControl<string>;
   imageControl!: FormControl<string>;
-
 
   constructor(
     private readonly productsService: ProductsService,
@@ -39,23 +48,36 @@ export class ProductFormComponent implements OnInit, CanDeactivateComponent {
   ) {}
 
   ngOnInit(): void {
-    this.descControl = this.fb.control('', [Validators.required, Validators.minLength(5)])
-    this.priceControl = this.fb.control(0, [Validators.required, Validators.min(0.1)])
-    this.availControl = this.fb.control('', [Validators.required])
-    this.imageControl = this.fb.control('', [Validators.required])
+    this.descControl = this.fb.control('', [
+      Validators.required,
+      Validators.minLength(5),
+    ]);
+    this.priceControl = this.fb.control(0, [
+      Validators.required,
+      Validators.min(0.1),
+    ]);
+    this.availControl = this.fb.control('', [
+      Validators.required,
+      minDateValidator('2022-01-01'),
+    ]);
+    this.imageControl = this.fb.control('', [Validators.required]);
 
     this.formProduct = this.fb.group({
       description: this.descControl,
       price: this.priceControl,
       available: this.availControl,
-      image: this.imageControl
+      image: this.imageControl,
     });
 
     this.titleService.setTitle('Add Product | Angular Products');
   }
 
   canDeactivate() {
-    return this.saved || confirm('Do you want to leave this page?. Changes can be lost');
+    return (
+      this.saved ||
+      this.formProduct.pristine ||
+      confirm('Do you want to leave this page?. Changes can be lost')
+    );
   }
 
   changeImage(event: Event) {
@@ -69,10 +91,23 @@ export class ProductFormComponent implements OnInit, CanDeactivateComponent {
   }
 
   addProduct() {
-    // this.products.push(this.newProduct);
-    this.productsService.addProduct(this.newProduct).subscribe((product) => {
+    this.newProduct.description = this.descControl.value;
+    this.newProduct.available = this.availControl.value;
+    this.newProduct.price = this.priceControl.value;
+    let save$: Observable<Product>;
+    if (this.edit) {
+      save$ = this.productsService.editProduct(this.newProduct);
+    } else {
+      save$ = this.productsService.addProduct(this.newProduct);
+    }
+
+    save$.subscribe((product) => {
       this.saved = true;
-      this.router.navigate(['/products']);
+      if (this.edit) {
+        this.router.navigate(['/products', product.id]);
+      } else {
+        this.router.navigate(['/products']);
+      }
     });
   }
 
