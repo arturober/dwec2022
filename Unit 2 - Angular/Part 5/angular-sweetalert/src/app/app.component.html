@@ -1,0 +1,51 @@
+<button
+  [swal]="{
+    title: 'Important question',
+    text: 'Can you see this?',
+    icon: 'question'
+  }"
+>
+  Show SweetAlert question
+</button>
+
+<button
+  [swal]="{ title: 'Who are you?', input: 'text', icon: 'question' }"
+  (confirm)="sayHello($event)"
+  (dismiss)="cancelHello()"
+>
+  Ask name
+</button>
+
+<p>{{ name }}</p>
+
+<swal
+  #confirmDialog
+  title="Are you sure?"
+  text="This cannot be undone"
+  icon="question"
+  [showDenyButton]="true"
+  [focusCancel]="true"
+></swal>
+
+<button (click)="confirmDialog.fire()">Show swal component from HTML</button>
+<button (click)="showConfirmFromCode()">Show swal component from code</button>
+<p>{{ result }}</p>
+
+<swal icon="success" #customSwal [showDenyButton]="true">
+  <ng-container *swalPortal="swalTargets.title">
+    Hello {{ name }}
+  </ng-container>
+  <ng-container *swalPortal="swalTargets.content">
+    <ul style="text-align: left">
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </ul>
+    Go to <a href="https://google.es">Google</a>
+  </ng-container>
+  <ng-container *swalPortal="swalTargets.denyButton"> NOOO!! </ng-container>
+  <ng-container *swalPortal="swalTargets.confirmButton"> YES </ng-container>
+</swal>
+
+<button (click)="customSwal.fire()">Show custom dialog</button>
+
