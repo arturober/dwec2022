@@ -1,0 +1,16 @@
+<button
+  appGoogleLogin
+  type="button"
+  class="btn btn-danger"
+  (loginOk)="loggedGoogle($event)"
+>
+  <fa-icon [icon]="googleIcon"></fa-icon>
+  Login with Google
+</button>
+
+<div>
+  <p>{{userInfo.name}}</p>
+  <p>{{userInfo.email}}</p>
+  <p><img [src]="userInfo.image" alt=""></p>
+  <p>{{userInfo.token}}</p>
+</div>
