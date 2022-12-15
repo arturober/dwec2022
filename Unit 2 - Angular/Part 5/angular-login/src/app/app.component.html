@@ -14,3 +14,20 @@
   <p><img [src]="userInfo.image" alt=""></p>
   <p>{{userInfo.token}}</p>
 </div>
+
+
+<button
+  appFbLogin
+  type="button"
+  class="btn btn-primary"
+  (loginOk)="loggedFacebook($event)"
+  [scopes]="['email', 'public_profile']"
+>
+  <fa-icon [icon]="fbIcon"></fa-icon>
+  Login with Facebook
+</button>
+
+<div>
+  <p>{{fbUserInfo.token}}</p>
+  <p>{{fbUserInfo.userId}}</p>
+</div>
