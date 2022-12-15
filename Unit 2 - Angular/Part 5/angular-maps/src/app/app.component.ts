@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ArcgisMapComponent } from './maps/arcgis-map/arcgis-map.component';
 import { ArcgisMarkerDirective } from './maps/arcgis-marker/arcgis-marker.directive';
 import { ArcgisSearchDirective } from './maps/arcgis-search/arcgis-search.directive';
@@ -17,11 +17,18 @@ import { SearchResult } from './maps/interfaces/search-result';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'angular-maps';
   address = '';
-  latitude = 0.37;
+  latitude = 37;
   longitude = -0.5;
+
+  ngOnInit() {
+    navigator.geolocation.getCurrentPosition(pos => {
+      this.latitude = pos.coords.latitude;
+      this.longitude = pos.coords.longitude;
+    });
+  }
 
   searchResult(result: SearchResult) {
     this.address = result.address;

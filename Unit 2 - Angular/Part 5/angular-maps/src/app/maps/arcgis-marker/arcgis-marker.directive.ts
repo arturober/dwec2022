@@ -22,7 +22,7 @@ export class ArcgisMarkerDirective implements OnChanges {
   ) {}
 
   async ngOnChanges(changes: SimpleChanges) {
-    if (changes['coords'].isFirstChange()) {
+    if (changes['coords'].isFirstChange()) { // First time, generate the marker
       this.map.mapViewLoad$.subscribe((mapView) => {
         this.loadMaps
           .getMarker(
@@ -33,18 +33,27 @@ export class ArcgisMarkerDirective implements OnChanges {
             },
             this.color
           )
-          .then((marker) => (this.marker = marker));
+          .then((marker) => {
+            this.marker = marker;
+            this.updateMarker(); // Maybe coords have changed while loading
+          });
       });
     } else if (changes['coords'].currentValue !== changes['coords'].previousValue) {
+      this.updateMarker();
+    }
+
+    if (changes['color']?.currentValue !== changes['color']?.previousValue) {
+      this.marker?.symbol?.color.setColor(this.color);
+    }
+  }
+
+  private async updateMarker() {
+    if(this.marker) {
       const { Point } = await import('@arcgis/core/geometry');
       this.marker.geometry = new Point({
         latitude: this.coords[1],
         longitude: this.coords[0]
       });
-    }
-
-    if (changes['color']?.currentValue !== changes['color']?.previousValue) {
-      this.marker?.symbol?.color.setColor(this.color);
     }
   }
 }
