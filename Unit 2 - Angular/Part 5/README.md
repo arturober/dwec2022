@@ -1,1 +1,1 @@
-FontAwesome and ngBootstrap examples are integrated in the angular-products project
+FontAwesome (star-rating) and ngBootstrap examples (confirm modal and responsive menu) are integrated in the angular-products project
