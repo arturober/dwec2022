@@ -29,6 +29,7 @@ export class ArcgisMapComponent implements OnChanges, AfterViewInit {
   mapView!: MapView;
 
   constructor(private readonly loadMaps: LoadArcgisMapsService) {}
+
   ngAfterViewInit(): void {
     this.loadMaps
     .getMapView(this.mapDiv.nativeElement, {
@@ -37,13 +38,15 @@ export class ArcgisMapComponent implements OnChanges, AfterViewInit {
     })
     .then((mapView) => {
       this.mapView = mapView;
+      this.mapView.goTo({center: this.coords}); // Maybe coords have changed while loading the map
       this.mapViewLoad$.next(mapView);
       this.mapViewLoad$.complete();
     });
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes['coords'].isFirstChange()) {
+    if (this.mapView) {
       this.mapView.goTo({center: this.coords});
     }
   }

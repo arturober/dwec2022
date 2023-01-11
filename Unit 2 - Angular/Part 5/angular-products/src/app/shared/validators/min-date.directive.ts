@@ -10,7 +10,6 @@ export class MinDateDirective implements Validator {
   @Input() minDate!: string;
 
   validate(control: FormControl<string>): ValidationErrors | null {
-      console.log(this.minDate, control.value);
       if (this.minDate && control.value && this.minDate > control.value) {
         return { minDate: true }; // Error returned
       }
