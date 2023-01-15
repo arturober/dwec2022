@@ -1,5 +1,5 @@
 import { enableProdMode, importProvidersFrom } from '@angular/core';
-import { bootstrapApplication } from '@angular/platform-browser';
+import { bootstrapApplication, HammerModule } from '@angular/platform-browser';
 import { PreloadAllModules, provideRouter, RouteReuseStrategy, withPreloading } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app/app.component';
@@ -16,5 +16,6 @@ bootstrapApplication(AppComponent, {
     provideRouter(APP_ROUTES, withPreloading(PreloadAllModules)),
     importProvidersFrom(IonicModule.forRoot()),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    importProvidersFrom(HammerModule)
   ],
 });
