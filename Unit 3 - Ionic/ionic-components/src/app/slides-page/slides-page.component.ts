@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, IonSlides } from '@ionic/angular';
 
 @Component({
   selector: 'app-slides-page',
@@ -20,8 +20,7 @@ export class SlidesPageComponent implements OnInit {
   ngOnInit() {
   }
 
-  async slideChange(event: Event) {
-    const slides = (event.target as HTMLIonSlidesElement);
+  async slideChange(slides: IonSlides) {
     console.log(await slides.getActiveIndex());
   }
 }
