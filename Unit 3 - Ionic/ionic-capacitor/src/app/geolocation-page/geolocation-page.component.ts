@@ -17,7 +17,7 @@ export class GeolocationPageComponent implements OnInit {
   lng = 0;
 
   async ngOnInit() {
-    const coordinates = await Geolocation.getCurrentPosition();
+    const coordinates = await Geolocation.getCurrentPosition({enableHighAccuracy: true});
     this.lat = coordinates.coords.latitude;
     this.lng = coordinates.coords.longitude;
   }

@@ -92,6 +92,62 @@ export const APP_ROUTES: Routes = [
       ),
   },
   {
+    path: 'toast',
+    loadComponent: () =>
+      import('./toast-page/toast-page.component').then(
+        (m) => m.ToastPageComponent
+      ),
+  },
+  {
+    path: 'app',
+    loadComponent: () =>
+      import('./app-page/app-page.component').then(
+        (m) => m.AppPageComponent
+      ),
+  },
+  {
+    path: 'driving-directions',
+    loadComponent: () =>
+      import('./driving-directions-page/driving-directions-page.component').then(
+        (m) => m.DrivingDirectionsPageComponent
+      ),
+  },
+  {
+    path: 'google-login',
+    loadComponent: () =>
+      import('./google-login-page/google-login-page.component').then(
+        (m) => m.GoogleLoginPageComponent
+      ),
+  },
+  {
+    path: 'facebook-login',
+    loadComponent: () =>
+      import('./facebook-login-page/facebook-login-page.component').then(
+        (m) => m.FacebookLoginPageComponent
+      ),
+  },
+  {
+    path: 'barcode-scanner',
+    loadComponent: () =>
+      import('./barcode-scanner-page/barcode-scanner-page.component').then(
+        (m) => m.BarcodeScannerPageComponent
+      ),
+  },
+  {
+    path: 'sqlite',
+    loadComponent: () =>
+      import('./sqlite-page/sqlite-page.component').then(
+        (m) => m.SqlitePageComponent
+      ),
+  },
+  {
+    path: 'flashlight',
+    loadComponent: () =>
+      import('./flashlight-page/flashlight-page.component').then(
+        (m) => m.FlashlightPageComponent
+      ),
+  },
+  {
     path: '',
     redirectTo: '/vibration',
     pathMatch: 'full'

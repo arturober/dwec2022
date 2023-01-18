@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { IonicModule, Platform } from '@ionic/angular';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { SplashScreen } from '@capacitor/splash-screen';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +16,19 @@ import { SplashScreen } from '@capacitor/splash-screen';
 export class AppComponent {
   public appPages = [
     {
+      title: 'App',
+      url: '/app',
+      icon: 'apps'
+    },
+    {
       title: 'Action Sheet',
       url: '/action-sheet',
       icon: 'chevron-up'
+    },
+    {
+      title: 'Barcode Scanner',
+      url: '/barcode-scanner',
+      icon: 'barcode'
     },
     {
       title: 'Camera',
@@ -40,14 +51,36 @@ export class AppComponent {
       icon: 'alert'
     },
     {
+      title: 'Driving directions',
+      url: '/driving-directions',
+      icon: 'navigate'
+    },
+    {
+      title: 'Facebook Login',
+      url: '/facebook-login',
+      icon: 'logo-facebook',
+      logo: true
+    },
+    {
       title: 'Filesystem',
       url: '/filesystem',
       icon: 'folder'
     },
     {
+      title: 'Flashlight',
+      url: '/flashlight',
+      icon: 'flashlight'
+    },
+    {
       title: 'Geolocation',
       url: '/geolocation',
       icon: 'pin'
+    },
+    {
+      title: 'Google Login',
+      url: '/google-login',
+      icon: 'logo-google',
+      logo: true
     },
     {
       title: 'Local notifications',
@@ -70,9 +103,19 @@ export class AppComponent {
       icon: 'share'
     },
     {
+      title: 'SQLite',
+      url: '/sqlite',
+      icon: 'grid'
+    },
+    {
       title: 'Storage',
       url: '/storage',
       icon: 'save'
+    },
+    {
+      title: 'Toast',
+      url: '/toast',
+      icon: 'alarm'
     },
     {
       title: 'Vibration',
@@ -93,6 +136,7 @@ export class AppComponent {
       SplashScreen.hide();
       StatusBar.setBackgroundColor({ color: '#3880ff' });
       StatusBar.setStyle({ style: Style.Dark });
+      GoogleAuth.initialize();
     }
   }
 }
