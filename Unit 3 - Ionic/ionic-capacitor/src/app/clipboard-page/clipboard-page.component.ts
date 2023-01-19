@@ -18,7 +18,7 @@ export class ClipboardPageComponent {
 
   async copy() {
     await Clipboard.write({
-      string: this.text
+      string: this.text,
     });
 
     const toast = await this.toastCtrl.create({

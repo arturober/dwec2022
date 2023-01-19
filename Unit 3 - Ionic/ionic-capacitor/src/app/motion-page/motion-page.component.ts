@@ -26,9 +26,7 @@ export class MotionPageComponent implements OnDestroy {
     });
     this.orientListener = Motion.addListener('orientation', event => {
       this.ngZone.run(() => {
-        this.orientation.alpha = event.alpha;
-        this.orientation.beta = event.beta;
-        this.orientation.gamma = event.gamma;
+        this.orientation = event;
       });
     });
 

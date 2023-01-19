@@ -22,7 +22,7 @@ export class ActionSheetPageComponent {
           title: 'Upload',
         },
         {
-          title: 'Share'
+          title: 'Share',
         },
         {
           title: 'Remove',
