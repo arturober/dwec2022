@@ -20,6 +20,7 @@ export class GeolocationPageComponent implements OnInit {
     const coordinates = await Geolocation.getCurrentPosition({
       enableHighAccuracy: true
     });
+
     this.lat = coordinates.coords.latitude;
     this.lng = coordinates.coords.longitude;
   }
