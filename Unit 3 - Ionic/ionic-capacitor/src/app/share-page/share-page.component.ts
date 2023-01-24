@@ -19,7 +19,7 @@ export class SharePageComponent {
   share() {
     Share.share({
       dialogTitle: 'Share with others!',
-      text: this.message
+      text: this.message,
     });
   }
 }

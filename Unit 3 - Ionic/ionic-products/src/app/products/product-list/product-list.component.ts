@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ActionSheetController, IonicModule, NavController } from '@ionic/angular';
+import { ActionSheetController, IonicModule, IonRefresher, NavController } from '@ionic/angular';
 import { Product } from '../interfaces/product.interface';
 import { ProductService } from '../services/product.service';
 
@@ -26,6 +26,15 @@ export class ProductListComponent {
     this.productService
       .getProducts()
       .subscribe((prods) => (this.products = prods));
+  }
+
+  reloadProducts(refresher: IonRefresher) {
+    this.productService
+    .getProducts()
+    .subscribe((prods) => {
+      this.products = prods;
+      refresher.complete();
+    });
   }
 
   async showOptions(prod: Product) {
