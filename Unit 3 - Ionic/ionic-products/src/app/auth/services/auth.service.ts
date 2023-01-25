@@ -27,7 +27,6 @@ export class AuthService {
       })
       .pipe(
         switchMap(async (r) => {
-          // switchMap must return a Promise or observable (a Promise in this case)
           try {
             await Preferences.set({ key: 'fs-token', value: r.accessToken });
             this.setLogged(true);

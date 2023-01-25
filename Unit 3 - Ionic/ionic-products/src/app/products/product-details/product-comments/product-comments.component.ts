@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   IonicModule,
@@ -18,7 +18,7 @@ import { ProductService } from '../../services/product.service';
   templateUrl: './product-comments.component.html',
   styleUrls: ['./product-comments.component.scss'],
 })
-export class ProductCommentsComponent implements OnInit {
+export class ProductCommentsComponent implements OnInit, OnDestroy {
   idProd!: number;
   comments!: Comment[];
   resumeSub!: Subscription;
@@ -34,9 +34,13 @@ export class ProductCommentsComponent implements OnInit {
   ngOnInit() {
     this.loadComments();
     // If the app comes back from being paused, reload comments
-    this.resumeSub = this.platform.resume.subscribe(() =>
-      this.ngZone.run(() => this.loadComments()) // Needs NgZone because Angular doesn't detect this event
+    this.resumeSub = this.platform.resume.subscribe(
+      () => this.ngZone.run(() => this.loadComments()) // Needs NgZone because Angular doesn't detect this event
     );
+  }
+
+  ngOnDestroy(): void {
+    this.resumeSub.unsubscribe();
   }
 
   loadComments(refresher?: IonRefresher) {

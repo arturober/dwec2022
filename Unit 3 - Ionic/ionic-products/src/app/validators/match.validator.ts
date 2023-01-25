@@ -1,5 +1,5 @@
 import { Directive, Input } from '@angular/core';
-import { Validator, AbstractControl, FormGroup, NG_VALIDATORS } from '@angular/forms';
+import { Validator, AbstractControl, FormGroup, NG_VALIDATORS, ValidationErrors } from '@angular/forms';
 
 @Directive({
   selector: '[appMatch]',
@@ -11,7 +11,7 @@ export class MatchValidator implements Validator {
 
   constructor() { }
 
-  validate(group: AbstractControl): { [key: string]: any } | null {
+  validate(group: AbstractControl): ValidationErrors | null {
     if (group instanceof FormGroup) {
       const names = this.names.split(',');
       const val = group.value[names[0]];
